@@ -67,13 +67,13 @@ const AboutSection = () => {
   };
 
   return (
-    <section ref={sectionRef} className="py-20 bg-customBg">
-      <div className="container-custom">
+    <section ref={sectionRef} className="py-20 bg-customBg relative">
+      <div className="container-custom relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-16 relative"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-primary-navy mb-4">About <span className="text-accent-coral">Digimatika</span></h2>
           <div className="w-24 h-1 bg-accent-coral mx-auto mb-8"></div>
@@ -82,9 +82,9 @@ const AboutSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative">
           {/* Left: Founders */}
-          <div className="space-y-10">
+          <div className="space-y-10 relative">
             <motion.h3
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -94,7 +94,7 @@ const AboutSection = () => {
               Meet Our Founders
             </motion.h3>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 relative">
               {founderData.map((founder, index) => (
                 <motion.div
                   key={founder.name}
@@ -120,8 +120,8 @@ const AboutSection = () => {
           </div>
 
           {/* Right: About and Timeline */}
-          <div className="space-y-10">
-            <div className="space-y-6">
+          <div className="space-y-10 relative">
+            <div className="space-y-6 relative">
               <motion.h3
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -135,7 +135,7 @@ const AboutSection = () => {
                 initial="hidden"
                 animate={isInView ? "visible" : "hidden"}
                 variants={typingVariants}
-                className="overflow-hidden"
+                className="overflow-hidden relative"
               >
                 <p className="text-secondary-slate leading-relaxed">
                   Digimatika was born from a simple idea: automation shouldn't be complicated. Our founders, with backgrounds in AI and software engineering, set out to create solutions that bring the power of automation to businesses of all sizes.
@@ -146,7 +146,7 @@ const AboutSection = () => {
                 initial="hidden"
                 animate={isInView ? "visible" : "hidden"}
                 variants={typingVariants}
-                className="overflow-hidden"
+                className="overflow-hidden relative"
                 transition={{ delay: 0.3 }}
               >
                 <p className="text-secondary-slate leading-relaxed">
@@ -155,7 +155,7 @@ const AboutSection = () => {
               </motion.div>
             </div>
 
-            <div>
+            <div className="relative">
               <motion.h3
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -170,7 +170,7 @@ const AboutSection = () => {
                 <div className="absolute left-0 md:left-[15px] top-0 bottom-0 w-px bg-gradient-to-b from-primary-navy/20 via-accent-coral to-accent-cream" />
 
                 {/* Timeline events */}
-                <div className="space-y-8">
+                <div className="space-y-8 relative">
                   {timelineEvents.map((event, index) => (
                     <motion.div
                       key={event.year}
