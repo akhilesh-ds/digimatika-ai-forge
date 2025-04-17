@@ -3,7 +3,7 @@ import Layout from "@/components/Layout/Layout";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { CheckCircle, ArrowRight, MessageSquare, Bot, Shield, Zap, Database, MessagesSquare } from "lucide-react";
+import { CheckCircle, ArrowRight, MessageSquare, Bot, Shield, Zap, Database, MessagesSquare, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CallToActionSection from "@/components/Home/CallToActionSection";
 
