@@ -5,7 +5,7 @@ import { ArrowRight, Play, CheckCircle, AlertTriangle, Database, RefreshCw } fro
 
 const WorkflowShowcaseSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
+  const isInView = useInView(sectionRef, { once: true, amount: 0.2, margin: "0px 0px -200px 0px" });
 
   const workflowSteps = [
     {
@@ -48,13 +48,13 @@ const WorkflowShowcaseSection = () => {
   ];
 
   return (
-    <section ref={sectionRef} className="py-20 bg-gray-50">
-      <div className="container-custom">
+    <section ref={sectionRef} className="py-20 bg-gray-50 relative">
+      <div className="container-custom relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-16 relative"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-primary-navy mb-4">Workflow <span className="text-accent-coral">Automation</span></h2>
           <div className="w-24 h-1 bg-accent-coral mx-auto mb-8"></div>
@@ -88,7 +88,7 @@ const WorkflowShowcaseSection = () => {
                   </div>
                 </div>
                 
-                <div className="bg-white rounded-xl shadow-md p-6 w-full transform transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                <div className="bg-white rounded-xl shadow-md p-6 w-full transform transition-all duration-300 hover:shadow-lg">
                   <h3 className="text-xl font-bold text-primary-navy mb-2">{step.title}</h3>
                   <p className="text-secondary-slate">{step.description}</p>
                 </div>
@@ -111,7 +111,7 @@ const WorkflowShowcaseSection = () => {
             {/* Central automation hub */}
             <motion.div
               animate={{ 
-                boxShadow: ['0 0 0 rgba(244, 213, 141, 0)', '0 0 30px rgba(244, 213, 141, 0.7)', '0 0 0 rgba(244, 213, 141, 0)'] 
+                boxShadow: ['0 0 0px rgba(0,0,0,0)', '0 0 30px rgba(244, 213, 141, 0.7)', '0 0 0px rgba(0,0,0,0)'] 
               }}
               transition={{ duration: 3, repeat: Infinity }}
               className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full bg-white shadow-xl flex items-center justify-center z-10"
@@ -128,7 +128,7 @@ const WorkflowShowcaseSection = () => {
               </div>
             </motion.div>
             
-            {/* Integration nodes - positioned in a circle around the center */}
+            {/* Integration nodes */}
             {integrationTools.map((tool, index) => {
               const angle = (index * (360 / integrationTools.length)) * (Math.PI / 180);
               const radius = 120; // Distance from center

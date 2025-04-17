@@ -4,7 +4,7 @@ import { motion, useInView } from 'framer-motion';
 
 const AboutSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
+  const isInView = useInView(sectionRef, { once: true, amount: 0.2, margin: "0px 0px -200px 0px" });
 
   const founderData = [
     {
@@ -60,14 +60,14 @@ const AboutSection = () => {
       width: "100%", 
       opacity: 1,
       transition: { 
-        duration: 1.2,
+        duration: 1,
         ease: "easeInOut",
       }
     }
   };
 
   return (
-    <section ref={sectionRef} className="py-20 bg-customBg relative">
+    <section ref={sectionRef} className="py-20 bg-customBg relative z-0">
       <div className="container-custom relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -167,7 +167,7 @@ const AboutSection = () => {
 
               <div className="relative">
                 {/* Timeline line */}
-                <div className="absolute left-0 md:left-[15px] top-0 bottom-0 w-px bg-gradient-to-b from-primary-navy/20 via-accent-coral to-accent-cream" />
+                <div className="absolute left-0 md:left-[15px] top-0 bottom-0 w-px bg-gradient-to-b from-primary-navy/20 via-accent-coral to-accent-cream rounded-full z-0" />
 
                 {/* Timeline events */}
                 <div className="space-y-8 relative">
@@ -180,7 +180,7 @@ const AboutSection = () => {
                       className="relative pl-8 md:pl-12"
                     >
                       {/* Year marker */}
-                      <div className="absolute left-[-10px] md:left-[5px] top-0 w-5 h-5 rounded-full bg-accent-coral shadow-md transform -translate-x-1/2" />
+                      <div className="absolute left-[-10px] md:left-[5px] top-0 w-5 h-5 rounded-full bg-accent-coral shadow-md transform -translate-x-1/2 z-10" />
                       
                       <div className="bg-white p-6 rounded-lg shadow-md">
                         <div className="text-accent-coral font-bold text-lg mb-2">{event.year}</div>
