@@ -58,9 +58,13 @@ const Navbar = () => {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="text-2xl font-bold text-primary-navy"
+            className="text-primary-navy"
           >
-            DIGIMATIKA
+            <img 
+              src="/lovable-uploads/38d1a52b-412b-4aad-b5c7-3c5c516dfacf.png" 
+              alt="Digimatika Logo" 
+              className="h-12 w-auto"
+            />
           </motion.div>
         </Link>
 

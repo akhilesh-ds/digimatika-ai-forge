@@ -1,4 +1,3 @@
-
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -104,13 +103,16 @@ const ServicesSection = () => {
   ];
 
   return (
-    <section ref={sectionRef} className="py-20 bg-gray-50">
-      <div className="container-custom">
+    <section 
+      ref={sectionRef} 
+      className="py-20 bg-gray-50 relative"
+    >
+      <div className="container-custom relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-16 relative"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-primary-navy mb-4">Our <span className="text-accent-coral">Services</span></h2>
           <div className="w-24 h-1 bg-accent-coral mx-auto mb-8"></div>
@@ -119,7 +121,7 @@ const ServicesSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
           {services.map((service, index) => (
             <ServiceCard
               key={service.title}
