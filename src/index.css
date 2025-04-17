@@ -4,6 +4,7 @@
 
 @layer base {
   :root {
+    /* Default shadcn variables */
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
@@ -13,17 +14,22 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
+    /* Color palette for Digimatika */
     --primary: 222.2 47.4% 11.2%;
     --primary-foreground: 210 40% 98%;
+    --primary-navy: 213 55% 11%;  /* #0D1B2A */
 
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary-slate: 218 39% 17%;  /* #1B263B */
 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
+    --accent-coral: 1 100% 67%;  /* #FF5C58 */
+    --accent-cream: 44 78% 75%;  /* #F4D58D */
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
@@ -34,20 +40,18 @@
 
     --radius: 0.5rem;
 
+    /* Background and Text */
+    --bg-light-gray: 220 33% 98%;  /* #F7F9FB */
+    --text-jet-black: 240 3% 12%;  /* #1C1C1E */
+
+    /* Sidebar (keeping original) */
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
@@ -96,6 +100,79 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-customBg text-customText;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl lg:text-5xl;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+}
+
+@layer components {
+  /* Buttons */
+  .btn-primary {
+    @apply bg-primary-navy text-white px-6 py-3 rounded-md transition-all duration-300 
+           hover:shadow-lg hover:translate-y-[-2px] focus:outline-none focus:ring-2 focus:ring-accent-coral;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary-slate text-white px-6 py-3 rounded-md transition-all duration-300 
+           hover:shadow-lg hover:translate-y-[-2px] focus:outline-none focus:ring-2 focus:ring-accent-coral;
+  }
+
+  .btn-accent {
+    @apply bg-accent-coral text-white px-6 py-3 rounded-md transition-all duration-300 
+           hover:shadow-lg hover:translate-y-[-2px] focus:outline-none focus:ring-2 focus:ring-primary-navy;
+  }
+
+  /* Animated effects */
+  .typing-effect {
+    @apply overflow-hidden whitespace-nowrap border-r-4 border-customText;
+    animation: typing 3.5s steps(40, end), blink .75s step-end infinite;
+  }
+
+  .tilt-card {
+    @apply transition-all duration-300 hover:shadow-xl hover:scale-[1.02];
+    transform-style: preserve-3d;
+  }
+
+  .tilt-card:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+
+  /* Glassmorphism */
+  .glass {
+    @apply bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Scroll animations */
+  .reveal {
+    @apply opacity-0 translate-y-8 transition-all duration-700;
+  }
+
+  .reveal.active {
+    @apply opacity-100 translate-y-0;
+  }
+
+  /* Utilities */
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+
+  .container-custom {
+    @apply px-4 md:px-8 max-w-7xl mx-auto;
   }
 }
