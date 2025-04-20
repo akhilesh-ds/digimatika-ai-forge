@@ -1,11 +1,18 @@
 
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { useRef, useEffect } from 'react';
+import { motion, useInView, useAnimation } from 'framer-motion';
 import { ArrowRight, Play, CheckCircle, AlertTriangle, Database, RefreshCw } from 'lucide-react';
 
 const WorkflowShowcaseSection = () => {
+  const controls = useAnimation();
   const sectionRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.2, margin: "0px 0px -200px 0px" });
+  const isInView = useInView(sectionRef, { once: false, amount: 0.1 });
+
+  useEffect(() => {
+    if (isInView) {
+      controls.start('visible');
+    }
+  }, [isInView, controls]);
 
   const workflowSteps = [
     {
@@ -47,13 +54,27 @@ const WorkflowShowcaseSection = () => {
     { name: "Firebase", logo: "https://www.gstatic.com/devrel-devsite/prod/v84e6f6a61298bbae5bb110" },
   ];
 
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+  };
+
+  const stepVariants = {
+    hidden: { opacity: 0, x: -50 },
+    visible: (i: number) => ({
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.6, delay: 0.3 + (i * 0.2) }
+    })
+  };
+
   return (
-    <section ref={sectionRef} className="py-20 bg-gray-50 relative">
+    <section ref={sectionRef} className="py-20 bg-gray-50 relative z-0">
       <div className="container-custom relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          variants={itemVariants}
           className="text-center mb-16 relative"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-primary-navy mb-4">Workflow <span className="text-accent-coral">Automation</span></h2>
@@ -66,15 +87,16 @@ const WorkflowShowcaseSection = () => {
         {/* Workflow Steps Timeline */}
         <div className="relative max-w-4xl mx-auto mb-16">
           {/* Connecting line */}
-          <div className="absolute left-8 top-8 bottom-8 w-1 bg-gradient-to-b from-accent-coral via-accent-cream to-primary-navy rounded-full hidden md:block" />
+          <div className="absolute left-8 top-8 bottom-8 w-1 bg-gradient-to-b from-accent-coral via-accent-cream to-primary-navy rounded-full hidden md:block z-0" />
 
           <div className="space-y-12 relative">
             {workflowSteps.map((step, index) => (
               <motion.div
                 key={step.title}
-                initial={{ opacity: 0, x: -50 }}
-                animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-                transition={{ duration: 0.6, delay: step.delay }}
+                custom={index}
+                initial="hidden"
+                animate={isInView ? "visible" : "hidden"}
+                variants={stepVariants}
                 className="flex flex-col md:flex-row gap-6 items-start"
               >
                 <div className="flex-shrink-0 relative z-10">
@@ -99,9 +121,15 @@ const WorkflowShowcaseSection = () => {
 
         {/* Data Flow Visualization */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.8, delay: 1.2 }}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          variants={{
+            ...itemVariants,
+            visible: { 
+              ...itemVariants.visible, 
+              transition: { duration: 0.8, delay: 1.0 } 
+            }
+          }}
           className="bg-white rounded-xl shadow-lg p-8 overflow-hidden relative"
         >
           <h3 className="text-2xl font-bold text-primary-navy mb-6 text-center">Automation in Action</h3>
@@ -114,7 +142,7 @@ const WorkflowShowcaseSection = () => {
                 boxShadow: ['0 0 0px rgba(0,0,0,0)', '0 0 30px rgba(244, 213, 141, 0.7)', '0 0 0px rgba(0,0,0,0)'] 
               }}
               transition={{ duration: 3, repeat: Infinity }}
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full bg-white shadow-xl flex items-center justify-center z-10"
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full bg-white shadow-xl flex items-center justify-center z-20"
             >
               <div className="relative">
                 <RefreshCw className="w-12 h-12 text-accent-coral" />
@@ -138,10 +166,17 @@ const WorkflowShowcaseSection = () => {
               return (
                 <motion.div
                   key={tool.name}
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
-                  transition={{ duration: 0.5, delay: 1.5 + (index * 0.1) }}
-                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-lg bg-white shadow-lg flex flex-col items-center justify-center p-2"
+                  initial="hidden"
+                  animate={isInView ? "visible" : "hidden"}
+                  variants={{
+                    hidden: { opacity: 0, scale: 0 },
+                    visible: { 
+                      opacity: 1, 
+                      scale: 1, 
+                      transition: { duration: 0.5, delay: 1.2 + (index * 0.1) } 
+                    }
+                  }}
+                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-lg bg-white shadow-lg flex flex-col items-center justify-center p-2 z-10"
                   style={{ marginLeft: x, marginTop: y }}
                 >
                   <div className="w-8 h-8 bg-gray-200 rounded-md mb-1 overflow-hidden">
@@ -181,10 +216,16 @@ const WorkflowShowcaseSection = () => {
               return (
                 <motion.div
                   key={`line-${index}`}
-                  initial={{ scaleX: 0 }}
-                  animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
-                  transition={{ duration: 0.8, delay: 1.3 + (index * 0.1) }}
-                  className="absolute top-1/2 left-1/2 h-0.5 bg-gradient-to-r from-accent-coral to-accent-cream opacity-70"
+                  initial="hidden"
+                  animate={isInView ? "visible" : "hidden"}
+                  variants={{
+                    hidden: { scaleX: 0 },
+                    visible: { 
+                      scaleX: 1, 
+                      transition: { duration: 0.8, delay: 1.1 + (index * 0.1) } 
+                    }
+                  }}
+                  className="absolute top-1/2 left-1/2 h-0.5 bg-gradient-to-r from-accent-coral to-accent-cream opacity-70 z-0"
                   style={{ 
                     width: `${length}px`,
                     transformOrigin: 'left center',

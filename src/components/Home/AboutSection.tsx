@@ -1,10 +1,17 @@
 
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { useRef, useEffect } from 'react';
+import { motion, useInView, useAnimation } from 'framer-motion';
 
 const AboutSection = () => {
+  const controls = useAnimation();
   const sectionRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.2, margin: "0px 0px -200px 0px" });
+  const isInView = useInView(sectionRef, { once: false, amount: 0.1 });
+
+  useEffect(() => {
+    if (isInView) {
+      controls.start('visible');
+    }
+  }, [isInView, controls]);
 
   const founderData = [
     {
@@ -66,13 +73,23 @@ const AboutSection = () => {
     }
   };
 
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+  };
+
+  const timelineVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.6 } }
+  };
+
   return (
     <section ref={sectionRef} className="py-20 bg-customBg relative z-0">
       <div className="container-custom relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          variants={itemVariants}
           className="text-center mb-16 relative"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-primary-navy mb-4">About <span className="text-accent-coral">Digimatika</span></h2>
@@ -86,9 +103,9 @@ const AboutSection = () => {
           {/* Left: Founders */}
           <div className="space-y-10 relative">
             <motion.h3
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
+              initial="hidden"
+              animate={isInView ? "visible" : "hidden"}
+              variants={itemVariants}
               className="text-2xl md:text-3xl font-bold text-primary-navy"
             >
               Meet Our Founders
@@ -98,9 +115,15 @@ const AboutSection = () => {
               {founderData.map((founder, index) => (
                 <motion.div
                   key={founder.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                  transition={{ duration: 0.6, delay: founder.delay }}
+                  initial="hidden"
+                  animate={isInView ? "visible" : "hidden"}
+                  variants={{
+                    ...itemVariants,
+                    visible: { 
+                      ...itemVariants.visible, 
+                      transition: { duration: 0.6, delay: founder.delay } 
+                    }
+                  }}
                   className="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
                 >
                   <div className="relative aspect-[4/3] w-full overflow-hidden bg-gray-200">
@@ -123,9 +146,9 @@ const AboutSection = () => {
           <div className="space-y-10 relative">
             <div className="space-y-6 relative">
               <motion.h3
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
+                initial="hidden"
+                animate={isInView ? "visible" : "hidden"}
+                variants={itemVariants}
                 className="text-2xl md:text-3xl font-bold text-primary-navy"
               >
                 Our Story
@@ -146,8 +169,8 @@ const AboutSection = () => {
                 initial="hidden"
                 animate={isInView ? "visible" : "hidden"}
                 variants={typingVariants}
-                className="overflow-hidden relative"
                 transition={{ delay: 0.3 }}
+                className="overflow-hidden relative"
               >
                 <p className="text-secondary-slate leading-relaxed">
                   Today, we're proud to have helped hundreds of businesses transform their operations with custom AI chatbots, voice agents, and workflow automation tools that save time, reduce costs, and improve customer experiences.
@@ -157,9 +180,10 @@ const AboutSection = () => {
 
             <div className="relative">
               <motion.h3
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
+                initial="hidden"
+                animate={isInView ? "visible" : "hidden"}
+                variants={itemVariants}
+                transition={{ delay: 0.3 }}
                 className="text-2xl md:text-3xl font-bold text-primary-navy mb-6"
               >
                 Our Journey
@@ -174,9 +198,15 @@ const AboutSection = () => {
                   {timelineEvents.map((event, index) => (
                     <motion.div
                       key={event.year}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                      transition={{ duration: 0.6, delay: event.delay }}
+                      initial="hidden"
+                      animate={isInView ? "visible" : "hidden"}
+                      variants={{
+                        ...timelineVariants,
+                        visible: { 
+                          ...timelineVariants.visible, 
+                          transition: { duration: 0.6, delay: event.delay } 
+                        }
+                      }}
                       className="relative pl-8 md:pl-12"
                     >
                       {/* Year marker */}

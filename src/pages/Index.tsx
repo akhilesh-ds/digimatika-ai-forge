@@ -13,8 +13,10 @@ const Index = () => {
     <Layout>
       <HeroSection />
       <ServicesSection />
-      <AboutSection />
-      <WorkflowShowcaseSection />
+      <div className="relative z-0 overflow-visible">
+        <AboutSection />
+        <WorkflowShowcaseSection />
+      </div>
       <TestimonialsSection />
       <WhyChooseUsSection />
       <CallToActionSection />
