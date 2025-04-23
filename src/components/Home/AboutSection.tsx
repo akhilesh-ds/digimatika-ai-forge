@@ -1,7 +1,7 @@
 
 import { motion, useInView, useAnimation } from "framer-motion";
 import { useRef, useEffect } from "react";
-import { Users, Rocket, Bulb, BookOpen, MessageSquare, Award } from "lucide-react";
+import { Users, Rocket, Lightbulb, BookOpen, MessageSquare, Award } from "lucide-react";
 
 const founders = [
   {
@@ -27,7 +27,7 @@ const highlights = [
   {
     label: "Innovation",
     desc: "We stay ahead with cutting-edge AI and no-code technologies.",
-    icon: Bulb,
+    icon: Lightbulb,
   },
   {
     label: "Empathy",
