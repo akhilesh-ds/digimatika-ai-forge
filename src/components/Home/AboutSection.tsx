@@ -1,6 +1,50 @@
 
 import { motion, useInView, useAnimation } from "framer-motion";
 import { useRef, useEffect } from "react";
+import { Users, Rocket, Bulb, BookOpen, MessageSquare, Award } from "lucide-react";
+
+const founders = [
+  {
+    name: "Krishna Muraya",
+    role: "CEO & Co-Founder",
+    desc: "Visionary leader with a deep passion for responsible AI and automation at scale.",
+    img: "/lovable-uploads/photo-1581091226825-a6a2a5aee158",
+  },
+  {
+    name: "Akhilesh Yadav",
+    role: "CTO & Co-Founder",
+    desc: "Mathematics-driven innovator building the technical foundation for seamless, smart workflows.",
+    img: "/lovable-uploads/photo-1581092795360-fd1ca04f0952",
+  },
+];
+
+const highlights = [
+  {
+    label: "Simplicity",
+    desc: "We make automation easy to use, not just powerful.",
+    icon: Award,
+  },
+  {
+    label: "Innovation",
+    desc: "We stay ahead with cutting-edge AI and no-code technologies.",
+    icon: Bulb,
+  },
+  {
+    label: "Empathy",
+    desc: "Every solution is built with real users and real pain points in mind.",
+    icon: Users,
+  },
+  {
+    label: "Trust",
+    desc: "Our clients rely on us to deliver results that are measurable and meaningful.",
+    icon: Rocket,
+  },
+];
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7 } },
+};
 
 const AboutSection = () => {
   const controls = useAnimation();
@@ -11,60 +55,20 @@ const AboutSection = () => {
     if (isInView) controls.start("visible");
   }, [isInView, controls]);
 
-  const founders = [
-    {
-      name: "Krishna Muraya",
-      role: "CEO & Co-Founder",
-      desc: "Visionary leader with a deep passion for responsible AI and automation at scale.",
-    },
-    {
-      name: "Akhilesh Yadav",
-      role: "CTO & Co-Founder",
-      desc: "Mathematics-driven innovator building the technical foundation for seamless, smart workflows.",
-    },
-  ];
-
-  const highlights = [
-    {
-      label: "Simplicity",
-      desc: "We make automation easy to use, not just powerful.",
-    },
-    {
-      label: "Innovation",
-      desc: "We stay ahead with cutting-edge AI and no-code technologies.",
-    },
-    {
-      label: "Empathy",
-      desc: "Every solution is built with real users and real pain points in mind.",
-    },
-    {
-      label: "Trust",
-      desc: "Our clients rely on us to deliver results that are measurable and meaningful.",
-    },
-  ];
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.7 } },
-  };
-
   return (
     <section
       ref={sectionRef}
       className="py-20 bg-customBg relative z-0"
     >
-      <div className="container-custom relative z-10">
+      <div className="container-custom relative z-10 max-w-6xl">
         <motion.div
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
           variants={itemVariants}
           className="text-center mb-12"
         >
-          <div className="flex justify-center items-center gap-2 mb-2">
-            <span role="img" aria-label="puzzle" className="text-3xl">
-              🧩
-            </span>
-            <span className="text-lg font-medium text-accent-coral tracking-widest uppercase">
+          <div className="mb-3">
+            <span className="text-accent-coral text-lg font-semibold tracking-widest uppercase">
               About Digimatika
             </span>
           </div>
@@ -86,9 +90,7 @@ const AboutSection = () => {
               className="mb-10"
             >
               <div className="flex items-center gap-3 mb-2">
-                <span role="img" aria-label="rocket" className="text-2xl">
-                  🚀
-                </span>
+                <Rocket className="text-accent-coral" size={28} />
                 <span className="text-primary-navy text-xl md:text-2xl font-bold">
                   Our Mission
                 </span>
@@ -103,21 +105,20 @@ const AboutSection = () => {
               variants={itemVariants}
             >
               <div className="flex items-center gap-3 mb-3">
-                <span role="img" aria-label="idea" className="text-2xl">
-                  💡
-                </span>
+                <Award className="text-accent-coral" size={24} />
                 <span className="text-primary-navy text-xl md:text-2xl font-bold">
                   What We Stand For
                 </span>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-2">
-                {highlights.map((val) => (
+                {highlights.map(({label, desc, icon: Icon}) => (
                   <div
-                    key={val.label}
-                    className="bg-white rounded-lg shadow p-4 h-full flex flex-col"
+                    key={label}
+                    className="bg-white rounded-xl shadow p-5 h-full flex flex-col items-start gap-2"
                   >
-                    <div className="font-bold text-accent-coral mb-1">{val.label}</div>
-                    <div className="text-secondary-slate text-sm">{val.desc}</div>
+                    <Icon className="text-accent-coral mb-1" size={22} />
+                    <div className="font-bold text-primary-navy">{label}</div>
+                    <div className="text-secondary-slate text-sm">{desc}</div>
                   </div>
                 ))}
               </div>
@@ -132,24 +133,27 @@ const AboutSection = () => {
               className="mb-8"
             >
               <div className="flex items-center gap-3 mb-4">
-                <span role="img" aria-label="people" className="text-2xl">
-                  👥
-                </span>
+                <Users className="text-accent-coral" size={28} />
                 <span className="text-primary-navy text-xl md:text-2xl font-bold">
                   Meet the Founders
                 </span>
               </div>
-              <div className="flex flex-col gap-5">
+              <div className="flex flex-col gap-6">
                 {founders.map((f) => (
                   <div
                     key={f.name}
-                    className="bg-white rounded-lg shadow-md p-4 flex flex-col"
+                    className="bg-white rounded-xl shadow-md px-6 py-5 flex items-center gap-6"
                   >
-                    <div className="flex flex-col">
-                      <span className="font-bold text-primary-navy text-lg">{f.name}</span>
-                      <span className="text-accent-coral font-medium">{f.role}</span>
+                    <img
+                      src={f.img}
+                      alt={f.name}
+                      className="w-20 h-20 object-cover rounded-full border-4 border-accent-coral shadow"
+                    />
+                    <div>
+                      <span className="font-bold text-primary-navy text-lg block">{f.name}</span>
+                      <span className="text-accent-coral font-medium block">{f.role}</span>
+                      <p className="text-secondary-slate text-sm mt-2">{f.desc}</p>
                     </div>
-                    <p className="text-secondary-slate text-sm mt-2">{f.desc}</p>
                   </div>
                 ))}
               </div>
@@ -165,9 +169,7 @@ const AboutSection = () => {
             className="text-center mb-8"
           >
             <div className="flex items-center gap-3 justify-center mb-2">
-              <span role="img" aria-label="book" className="text-2xl">
-                📖
-              </span>
+              <BookOpen className="text-accent-coral" size={28} />
               <span className="text-primary-navy text-xl md:text-2xl font-bold">
                 Our Story: A Journey of Innovation
               </span>
@@ -202,9 +204,7 @@ const AboutSection = () => {
             className="text-center"
           >
             <div className="flex items-center gap-3 justify-center mb-2">
-              <span role="img" aria-label="speech" className="text-2xl">
-                💬
-              </span>
+              <MessageSquare className="text-accent-coral" size={28} />
               <span className="text-primary-navy text-xl md:text-2xl font-bold">
                 Why Our Customers Believe in Us
               </span>
