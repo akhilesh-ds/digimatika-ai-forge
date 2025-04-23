@@ -1,6 +1,6 @@
 
-import { useRef, useEffect } from 'react';
-import { motion, useInView, useAnimation } from 'framer-motion';
+import { motion, useInView, useAnimation } from "framer-motion";
+import { useRef, useEffect } from "react";
 
 const AboutSection = () => {
   const controls = useAnimation();
@@ -8,221 +8,214 @@ const AboutSection = () => {
   const isInView = useInView(sectionRef, { once: false, amount: 0.1 });
 
   useEffect(() => {
-    if (isInView) {
-      controls.start('visible');
-    }
+    if (isInView) controls.start("visible");
   }, [isInView, controls]);
 
-  const founderData = [
+  const founders = [
     {
-      name: 'Jane Mitchell',
-      role: 'CEO & Founder',
-      imageSrc: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80',
-      delay: 0.3,
+      name: "Krishna Muraya",
+      role: "CEO & Co-Founder",
+      desc: "Visionary leader with a deep passion for responsible AI and automation at scale.",
     },
     {
-      name: 'Michael Chen',
-      role: 'CTO & Co-Founder',
-      imageSrc: 'https://images.unsplash.com/photo-1566492031773-4f4e44671857?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80',
-      delay: 0.5,
+      name: "Akhilesh Yadav",
+      role: "CTO & Co-Founder",
+      desc: "Mathematics-driven innovator building the technical foundation for seamless, smart workflows.",
     },
   ];
 
-  const timelineEvents = [
+  const highlights = [
     {
-      year: '2018',
-      title: 'Company Founded',
-      description: 'Digimatika was established with a vision to make automation accessible to all businesses.',
-      delay: 0.3,
+      label: "Simplicity",
+      desc: "We make automation easy to use, not just powerful.",
     },
     {
-      year: '2019',
-      title: 'First AI Integration',
-      description: 'Launched our first AI-powered chatbot solution for customer service automation.',
-      delay: 0.5,
+      label: "Innovation",
+      desc: "We stay ahead with cutting-edge AI and no-code technologies.",
     },
     {
-      year: '2020',
-      title: 'Workflow Platform',
-      description: 'Developed our proprietary workflow automation platform for businesses.',
-      delay: 0.7,
+      label: "Empathy",
+      desc: "Every solution is built with real users and real pain points in mind.",
     },
     {
-      year: '2022',
-      title: 'Voice Agent Technology',
-      description: 'Introduced advanced voice agent technology with natural language processing.',
-      delay: 0.9,
-    },
-    {
-      year: '2023',
-      title: 'Global Expansion',
-      description: 'Extended our services to international markets with clients in over 20 countries.',
-      delay: 1.1,
+      label: "Trust",
+      desc: "Our clients rely on us to deliver results that are measurable and meaningful.",
     },
   ];
-
-  const typingVariants = {
-    hidden: { width: 0, opacity: 0 },
-    visible: { 
-      width: "100%", 
-      opacity: 1,
-      transition: { 
-        duration: 1,
-        ease: "easeInOut",
-      }
-    }
-  };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-  };
-
-  const timelineVariants = {
-    hidden: { opacity: 0, x: -20 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.6 } }
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7 } },
   };
 
   return (
-    <section ref={sectionRef} className="py-20 bg-customBg relative z-0">
+    <section
+      ref={sectionRef}
+      className="py-20 bg-customBg relative z-0"
+    >
       <div className="container-custom relative z-10">
         <motion.div
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
           variants={itemVariants}
-          className="text-center mb-16 relative"
+          className="text-center mb-12"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-primary-navy mb-4">About <span className="text-accent-coral">Digimatika</span></h2>
-          <div className="w-24 h-1 bg-accent-coral mx-auto mb-8"></div>
-          <p className="text-lg text-secondary-slate max-w-3xl mx-auto">
-            We blend creativity with technology to help businesses automate processes and enhance customer experiences through AI-powered solutions.
+          <div className="flex justify-center items-center gap-2 mb-2">
+            <span role="img" aria-label="puzzle" className="text-3xl">
+              🧩
+            </span>
+            <span className="text-lg font-medium text-accent-coral tracking-widest uppercase">
+              About Digimatika
+            </span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold text-primary-navy mb-4">
+            About Us
+          </h2>
+          <div className="w-24 h-1 bg-accent-coral mx-auto mb-6"></div>
+          <p className="text-lg text-secondary-slate max-w-2xl mx-auto">
+            At Digimatika, we believe automation should be intuitive, human-centered, and accessible to every business — no matter the size. We fuse creativity with AI to craft intelligent systems that drive efficiency, reduce complexity, and elevate customer experiences.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative">
-          {/* Left: Founders */}
-          <div className="space-y-10 relative">
-            <motion.h3
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start mb-12">
+          <div>
+            <motion.div
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
               variants={itemVariants}
-              className="text-2xl md:text-3xl font-bold text-primary-navy"
+              className="mb-10"
             >
-              Meet Our Founders
-            </motion.h3>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 relative">
-              {founderData.map((founder, index) => (
-                <motion.div
-                  key={founder.name}
-                  initial="hidden"
-                  animate={isInView ? "visible" : "hidden"}
-                  variants={{
-                    ...itemVariants,
-                    visible: { 
-                      ...itemVariants.visible, 
-                      transition: { duration: 0.6, delay: founder.delay } 
-                    }
-                  }}
-                  className="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
-                >
-                  <div className="relative aspect-[4/3] w-full overflow-hidden bg-gray-200">
-                    <img
-                      src={founder.imageSrc}
-                      alt={founder.name}
-                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <h4 className="text-xl font-bold text-primary-navy">{founder.name}</h4>
-                    <p className="text-accent-coral font-medium">{founder.role}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right: About and Timeline */}
-          <div className="space-y-10 relative">
-            <div className="space-y-6 relative">
-              <motion.h3
-                initial="hidden"
-                animate={isInView ? "visible" : "hidden"}
-                variants={itemVariants}
-                className="text-2xl md:text-3xl font-bold text-primary-navy"
-              >
-                Our Story
-              </motion.h3>
-
-              <motion.div
-                initial="hidden"
-                animate={isInView ? "visible" : "hidden"}
-                variants={typingVariants}
-                className="overflow-hidden relative"
-              >
-                <p className="text-secondary-slate leading-relaxed">
-                  Digimatika was born from a simple idea: automation shouldn't be complicated. Our founders, with backgrounds in AI and software engineering, set out to create solutions that bring the power of automation to businesses of all sizes.
-                </p>
-              </motion.div>
-
-              <motion.div
-                initial="hidden"
-                animate={isInView ? "visible" : "hidden"}
-                variants={typingVariants}
-                transition={{ delay: 0.3 }}
-                className="overflow-hidden relative"
-              >
-                <p className="text-secondary-slate leading-relaxed">
-                  Today, we're proud to have helped hundreds of businesses transform their operations with custom AI chatbots, voice agents, and workflow automation tools that save time, reduce costs, and improve customer experiences.
-                </p>
-              </motion.div>
-            </div>
-
-            <div className="relative">
-              <motion.h3
-                initial="hidden"
-                animate={isInView ? "visible" : "hidden"}
-                variants={itemVariants}
-                transition={{ delay: 0.3 }}
-                className="text-2xl md:text-3xl font-bold text-primary-navy mb-6"
-              >
-                Our Journey
-              </motion.h3>
-
-              <div className="relative">
-                {/* Timeline line */}
-                <div className="absolute left-0 md:left-[15px] top-0 bottom-0 w-px bg-gradient-to-b from-primary-navy/20 via-accent-coral to-accent-cream rounded-full z-0" />
-
-                {/* Timeline events */}
-                <div className="space-y-8 relative">
-                  {timelineEvents.map((event, index) => (
-                    <motion.div
-                      key={event.year}
-                      initial="hidden"
-                      animate={isInView ? "visible" : "hidden"}
-                      variants={{
-                        ...timelineVariants,
-                        visible: { 
-                          ...timelineVariants.visible, 
-                          transition: { duration: 0.6, delay: event.delay } 
-                        }
-                      }}
-                      className="relative pl-8 md:pl-12"
-                    >
-                      {/* Year marker */}
-                      <div className="absolute left-[-10px] md:left-[5px] top-0 w-5 h-5 rounded-full bg-accent-coral shadow-md transform -translate-x-1/2 z-10" />
-                      
-                      <div className="bg-white p-6 rounded-lg shadow-md">
-                        <div className="text-accent-coral font-bold text-lg mb-2">{event.year}</div>
-                        <h4 className="text-primary-navy font-bold text-xl mb-2">{event.title}</h4>
-                        <p className="text-secondary-slate">{event.description}</p>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
+              <div className="flex items-center gap-3 mb-2">
+                <span role="img" aria-label="rocket" className="text-2xl">
+                  🚀
+                </span>
+                <span className="text-primary-navy text-xl md:text-2xl font-bold">
+                  Our Mission
+                </span>
               </div>
-            </div>
+              <p className="text-accent-coral text-lg font-semibold mb-2">
+                To empower businesses with smart, scalable automation powered by AI — enabling them to move faster, serve better, and grow stronger.
+              </p>
+            </motion.div>
+            <motion.div
+              initial="hidden"
+              animate={isInView ? "visible" : "hidden"}
+              variants={itemVariants}
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <span role="img" aria-label="idea" className="text-2xl">
+                  💡
+                </span>
+                <span className="text-primary-navy text-xl md:text-2xl font-bold">
+                  What We Stand For
+                </span>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-2">
+                {highlights.map((val) => (
+                  <div
+                    key={val.label}
+                    className="bg-white rounded-lg shadow p-4 h-full flex flex-col"
+                  >
+                    <div className="font-bold text-accent-coral mb-1">{val.label}</div>
+                    <div className="text-secondary-slate text-sm">{val.desc}</div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
           </div>
+
+          <div>
+            <motion.div
+              initial="hidden"
+              animate={isInView ? "visible" : "hidden"}
+              variants={itemVariants}
+              className="mb-8"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <span role="img" aria-label="people" className="text-2xl">
+                  👥
+                </span>
+                <span className="text-primary-navy text-xl md:text-2xl font-bold">
+                  Meet the Founders
+                </span>
+              </div>
+              <div className="flex flex-col gap-5">
+                {founders.map((f) => (
+                  <div
+                    key={f.name}
+                    className="bg-white rounded-lg shadow-md p-4 flex flex-col"
+                  >
+                    <div className="flex flex-col">
+                      <span className="font-bold text-primary-navy text-lg">{f.name}</span>
+                      <span className="text-accent-coral font-medium">{f.role}</span>
+                    </div>
+                    <p className="text-secondary-slate text-sm mt-2">{f.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </div>
+
+        <div className="mb-12">
+          <motion.div
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            variants={itemVariants}
+            className="text-center mb-8"
+          >
+            <div className="flex items-center gap-3 justify-center mb-2">
+              <span role="img" aria-label="book" className="text-2xl">
+                📖
+              </span>
+              <span className="text-primary-navy text-xl md:text-2xl font-bold">
+                Our Story: A Journey of Innovation
+              </span>
+            </div>
+            <p className="text-secondary-slate max-w-2xl mx-auto text-md mb-2">
+              Digimatika was founded in October 2024 with one powerful belief:
+            </p>
+            <blockquote className="italic text-accent-coral font-semibold text-lg mt-2 mb-4">
+              “Automation shouldn't be complicated — it should just work.”
+            </blockquote>
+            <p className="text-secondary-slate max-w-3xl mx-auto">
+              What began as a vision between two passionate minds — one rooted in applied mathematics, the other in artificial intelligence — quickly evolved into a mission to reshape the future of business operations.
+              <br /><br />
+              Frustrated by clunky systems and inaccessible tech, our founders set out to build something different: Automation that’s intelligent, intuitive, and inclusive.
+              <br /><br />
+              From day one, we committed to blending deep technical expertise with a people-first approach — creating solutions that feel less like tools and more like trusted teammates.
+              <br /><br />
+              Since then, Digimatika has empowered hundreds of businesses to automate what matters most — from intelligent customer conversations to seamless backend operations. With custom-built AI chatbots, voice agents, and no-code workflow systems, we help teams move faster, serve better, and grow stronger.
+              <br /><br />
+              <span className="font-bold text-primary-navy">And this is just the beginning.</span>
+              <br />
+              Together, we’re building a future where automation works for everyone — simply, smartly, and at scale.
+            </p>
+          </motion.div>
+        </div>
+
+        <div className="mt-10">
+          <motion.div
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            variants={itemVariants}
+            className="text-center"
+          >
+            <div className="flex items-center gap-3 justify-center mb-2">
+              <span role="img" aria-label="speech" className="text-2xl">
+                💬
+              </span>
+              <span className="text-primary-navy text-xl md:text-2xl font-bold">
+                Why Our Customers Believe in Us
+              </span>
+            </div>
+            <ul className="list-disc list-inside text-secondary-slate max-w-xl mx-auto text-md grid gap-1 mt-4 text-left">
+              <li>Clarity in their operations</li>
+              <li>More time to focus on growth</li>
+              <li>Fewer errors and faster support</li>
+              <li>Real trust in their tech solutions</li>
+            </ul>
+          </motion.div>
         </div>
       </div>
     </section>
