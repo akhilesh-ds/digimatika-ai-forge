@@ -65,7 +65,7 @@ const TrustMeter = () => {
   
   const options = {
     responsive: true,
-    cutout: '70%', // Increased cutout to make more space for text
+    cutout: '70%',
     plugins: {
       legend: {
         position: 'bottom' as const,
@@ -101,7 +101,7 @@ const TrustMeter = () => {
             initial={{ opacity: 0, scale: 0 }}
             animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
             transition={{ delay: 0.5, duration: 0.5 }}
-            className="text-5xl font-bold text-primary-navy" // Increased text size
+            className="text-4xl font-bold text-primary-navy"
           >
             97%
           </motion.div>
@@ -109,7 +109,7 @@ const TrustMeter = () => {
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ delay: 0.8, duration: 0.5 }}
-            className="text-sm text-secondary-slate text-center mt-1" // Added margin to separate from percentage
+            className="text-sm text-secondary-slate text-center"
           >
             Average Trust Score
           </motion.div>
