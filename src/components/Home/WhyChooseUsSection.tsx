@@ -65,7 +65,7 @@ const TrustMeter = () => {
   
   const options = {
     responsive: true,
-    cutout: '70%',
+    cutout: '75%', // Increased cutout for better text positioning
     plugins: {
       legend: {
         position: 'bottom' as const,
@@ -101,7 +101,7 @@ const TrustMeter = () => {
             initial={{ opacity: 0, scale: 0 }}
             animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
             transition={{ delay: 0.5, duration: 0.5 }}
-            className="text-4xl font-bold text-primary-navy"
+            className="text-5xl font-bold text-primary-navy mt-1" // Increased text size and added margin-top
           >
             97%
           </motion.div>
