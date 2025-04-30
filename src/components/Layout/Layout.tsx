@@ -18,7 +18,7 @@ const Layout = ({ children }: LayoutProps) => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="flex-grow pt-20"
+          className="flex-grow pt-28" // Increased padding to accommodate the navbar
         >
           {children}
         </motion.main>
