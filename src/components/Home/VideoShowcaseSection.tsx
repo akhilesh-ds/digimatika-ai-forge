@@ -1,9 +1,10 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Play, Video } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 interface VideoCard {
   id: string;
@@ -11,49 +12,73 @@ interface VideoCard {
   description: string;
   videoSrc: string;
   thumbnailSrc?: string;
+  youtubeId?: string;
 }
 
+// Adding YouTube IDs for better embedding
 const videos: VideoCard[] = [
   {
     id: "business-automation",
     title: "Business Operation Automation",
     description: "Automating internal workflows to reduce manual effort and streamline operations.",
-    videoSrc: "https://www.youtube.com/embed/dQw4w9WgXcQ", // Replace with actual video URL
-    thumbnailSrc: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1470&auto=format&fit=crop"
+    videoSrc: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
+    thumbnailSrc: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1470&auto=format&fit=crop",
+    youtubeId: "dQw4w9WgXcQ"
   },
   {
     id: "voice-agent",
     title: "AI Voice Agent for Restaurant",
     description: "Conversational AI that takes reservations, answers FAQs, and enhances customer service.",
-    videoSrc: "https://www.youtube.com/embed/dQw4w9WgXcQ", // Replace with actual video URL
-    thumbnailSrc: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1470&auto=format&fit=crop"
+    videoSrc: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
+    thumbnailSrc: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1470&auto=format&fit=crop",
+    youtubeId: "dQw4w9WgXcQ"
   },
   {
     id: "travel-chatbot",
     title: "Travel Assistant Chatbot",
     description: "An AI travel planner that helps users book trips, find destinations, and get support.",
-    videoSrc: "https://www.youtube.com/embed/dQw4w9WgXcQ", // Replace with actual video URL
-    thumbnailSrc: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1474&auto=format&fit=crop"
+    videoSrc: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
+    thumbnailSrc: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1474&auto=format&fit=crop",
+    youtubeId: "dQw4w9WgXcQ"
   },
   {
     id: "ecommerce-chatbot",
     title: "E-Commerce Chatbot",
     description: "AI chatbot that helps users browse products, answer queries, and complete purchases.",
-    videoSrc: "https://www.youtube.com/embed/dQw4w9WgXcQ", // Replace with actual video URL
-    thumbnailSrc: "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?q=80&w=1470&auto=format&fit=crop"
+    videoSrc: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
+    thumbnailSrc: "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?q=80&w=1470&auto=format&fit=crop",
+    youtubeId: "dQw4w9WgXcQ"
   }
 ];
 
 const VideoCard = ({ video }: { video: VideoCard }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const { ref, inView } = useInView({
+    threshold: 0.3,
+    triggerOnce: true
+  });
+
+  // Reset video playing state when out of view for better performance
+  useEffect(() => {
+    if (!inView && isPlaying) {
+      setIsPlaying(false);
+      setIsLoading(true);
+    }
+  }, [inView, isPlaying]);
 
   const handlePlay = () => {
     setIsPlaying(true);
   };
 
+  // Generate optimized YouTube thumbnail URL
+  const getYouTubeThumbnail = (youtubeId: string) => {
+    return `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`;
+  };
+
   return (
     <motion.div
+      ref={ref}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -66,14 +91,24 @@ const VideoCard = ({ video }: { video: VideoCard }) => {
             <div 
               className="absolute inset-0 flex items-center justify-center cursor-pointer group"
               onClick={handlePlay}
+              role="button"
+              aria-label={`Play ${video.title} video`}
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  handlePlay();
+                }
+              }}
             >
-              {video.thumbnailSrc && (
-                <img 
-                  src={video.thumbnailSrc} 
-                  alt={video.title} 
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-              )}
+              {/* Use YouTube thumbnail if available, otherwise fall back to provided thumbnail */}
+              <img 
+                src={video.youtubeId ? getYouTubeThumbnail(video.youtubeId) : video.thumbnailSrc} 
+                alt={`${video.title} thumbnail`}
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                loading="lazy"
+                width="640"
+                height="360"
+              />
               <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-all duration-300" />
               <div className="absolute flex items-center justify-center bg-accent-coral text-white rounded-full p-4 transform transition-all duration-300 group-hover:scale-110 z-10">
                 <Play size={24} className="ml-1" />
@@ -93,6 +128,7 @@ const VideoCard = ({ video }: { video: VideoCard }) => {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
                 onLoad={() => setIsLoading(false)}
+                loading="lazy"
               ></iframe>
             </div>
           )}
@@ -109,8 +145,17 @@ const VideoCard = ({ video }: { video: VideoCard }) => {
 };
 
 const VideoShowcaseSection = () => {
+  const { ref, inView } = useInView({
+    threshold: 0.1,
+    triggerOnce: true
+  });
+  
   return (
-    <section className="bg-customBg py-16 md:py-24 relative overflow-hidden">
+    <section 
+      id="video-showcase"
+      ref={ref} 
+      className="bg-customBg py-16 md:py-24 relative overflow-hidden"
+    >
       <div className="container-custom">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

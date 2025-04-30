@@ -1,9 +1,8 @@
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Calendar, Mail, Phone } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
-import { useEffect } from 'react';
 
 declare global {
   interface Window {
@@ -13,20 +12,30 @@ declare global {
 
 const BookConsultationSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const calendlyRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
+  const [isCalendlyLoaded, setIsCalendlyLoaded] = useState(false);
 
-  // Load Calendly script
-  useEffect(() => {
-    const head = document.querySelector('head');
-    const script = document.createElement('script');
-    script.src = 'https://assets.calendly.com/assets/external/widget.js';
-    script.async = true;
-    head?.appendChild(script);
+  // Lazy load Calendly script only when section is in view
+  const loadCalendlyScript = () => {
+    if (!isCalendlyLoaded && calendlyRef.current) {
+      const head = document.querySelector('head');
+      const script = document.createElement('script');
+      script.src = 'https://assets.calendly.com/assets/external/widget.js';
+      script.async = true;
+      script.onload = () => setIsCalendlyLoaded(true);
+      head?.appendChild(script);
+    }
+  };
 
-    return () => {
-      head?.removeChild(script);
-    };
-  }, []);
+  // Use Intersection Observer to load Calendly when the container is in view
+  const { ref: calendlyObserverRef, inView: calendlyInView } = useInView({
+    threshold: 0.1,
+    triggerOnce: true,
+    onChange: (inView) => {
+      if (inView) loadCalendlyScript();
+    }
+  });
 
   return (
     <section ref={sectionRef} id="book-consultation" className="py-20 bg-white">
@@ -58,7 +67,7 @@ const BookConsultationSection = () => {
                 
                 <div className="space-y-4">
                   <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-lg bg-primary-navy text-white">
+                    <div className="p-3 rounded-lg bg-primary-navy text-white" aria-hidden="true">
                       <Calendar className="w-6 h-6" />
                     </div>
                     <div>
@@ -68,7 +77,7 @@ const BookConsultationSection = () => {
                   </div>
                   
                   <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-lg bg-accent-coral text-white">
+                    <div className="p-3 rounded-lg bg-accent-coral text-white" aria-hidden="true">
                       <Phone className="w-6 h-6" />
                     </div>
                     <div>
@@ -78,7 +87,7 @@ const BookConsultationSection = () => {
                   </div>
                   
                   <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-lg bg-secondary-slate text-white">
+                    <div className="p-3 rounded-lg bg-secondary-slate text-white" aria-hidden="true">
                       <Mail className="w-6 h-6" />
                     </div>
                     <div>
@@ -91,18 +100,26 @@ const BookConsultationSection = () => {
             </Card>
           </motion.div>
 
-          {/* Right side: Calendly */}
+          {/* Right side: Calendly with lazy loading */}
           <motion.div
+            ref={calendlyObserverRef}
             initial={{ opacity: 0, x: 50 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
             transition={{ duration: 0.7, delay: 0.2 }}
             className="bg-white rounded-xl shadow-lg p-6 min-h-[600px]"
           >
             <div 
+              ref={calendlyRef}
               className="calendly-inline-widget" 
               data-url="https://calendly.com/info-deepaisolutions/30min?hide_event_type_details=1&hide_gdpr_banner=1&background_color=ffffff&text_color=1C1C1E&primary_color=FF5C58"
-              style={{ minWidth: '320px', height: '630px' }}
-            />
+              style={{ minWidth: "320px", height: "630px" }}
+            >
+              {!calendlyInView && (
+                <div className="flex items-center justify-center h-full">
+                  <Calendar className="animate-pulse text-accent-coral" size={48} />
+                </div>
+              )}
+            </div>
             <p className="text-xs text-secondary-slate mt-4 text-center">
               By booking a consultation, you agree to our <a href="/terms-and-conditions" className="text-accent-coral hover:underline">Terms of Service</a> and <a href="/privacy-policy" className="text-accent-coral hover:underline">Privacy Policy</a>.
             </p>
