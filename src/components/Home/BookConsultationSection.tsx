@@ -32,7 +32,7 @@ const BookConsultationSection = () => {
   const observerRef = useRef<HTMLDivElement>(null);
   const observerIsInView = useInView(observerRef, {
     once: true,
-    rootMargin: '100px',
+    margin: '100px' // Changed from rootMargin to margin which is supported by framer-motion
   });
 
   // Effect to load Calendly when observerRef is in view
