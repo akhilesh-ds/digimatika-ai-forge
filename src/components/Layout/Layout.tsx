@@ -29,10 +29,12 @@ const Layout = ({ children }: LayoutProps) => {
           animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1 }}
           exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: shouldReduceMotion ? 0 : 0.3 }}
-          className="flex-grow pt-28" // Increased padding to accommodate the navbar
+          className="flex-grow pt-24" 
           tabIndex={-1}
         >
-          {children}
+          <div className="container mx-auto max-w-7xl px-4 md:px-8">
+            {children}
+          </div>
         </motion.main>
       </AnimatePresence>
       <Footer />

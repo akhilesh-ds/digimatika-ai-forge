@@ -175,7 +175,7 @@
   }
 
   .container-custom {
-    @apply px-4 md:px-8 max-w-7xl mx-auto;
+    @apply container mx-auto max-w-7xl px-4 md:px-8;
   }
   
   /* Advanced animation elements */
