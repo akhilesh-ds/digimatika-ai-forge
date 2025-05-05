@@ -31,8 +31,7 @@ const BookConsultationSection = () => {
   // Use Intersection Observer to load Calendly when the container is in view
   const observerRef = useRef<HTMLDivElement>(null);
   const observerIsInView = useInView(observerRef, {
-    threshold: 0.1,
-    triggerOnce: true,
+    once: true,
     onChange: (inView) => {
       if (inView) loadCalendlyScript();
     }

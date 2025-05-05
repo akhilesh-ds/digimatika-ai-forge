@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -56,6 +57,7 @@
   }
 
   .dark {
+    /* ... keep existing code (dark mode variables) */
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
 
@@ -174,5 +176,25 @@
 
   .container-custom {
     @apply px-4 md:px-8 max-w-7xl mx-auto;
+  }
+  
+  /* Advanced animation elements */
+  .grid-animation {
+    animation: gridMove 50s linear infinite;
+  }
+  
+  .circuit-pattern {
+    opacity: 0.15;
+    animation: patternPulse 10s ease-in-out infinite;
+  }
+  
+  @keyframes gridMove {
+    from { background-position: 0px 0px; }
+    to { background-position: 1000px 1000px; }
+  }
+  
+  @keyframes patternPulse {
+    0%, 100% { opacity: 0.15; }
+    50% { opacity: 0.25; }
   }
 }
