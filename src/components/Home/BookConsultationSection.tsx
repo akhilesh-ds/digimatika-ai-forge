@@ -32,10 +32,13 @@ const BookConsultationSection = () => {
   const observerRef = useRef<HTMLDivElement>(null);
   const observerIsInView = useInView(observerRef, {
     once: true,
-    onChange: (inView) => {
-      if (inView) loadCalendlyScript();
-    }
+    rootMargin: '100px',
   });
+
+  // Effect to load Calendly when observerRef is in view
+  if (observerIsInView && !isCalendlyLoaded) {
+    loadCalendlyScript();
+  }
 
   return (
     <section ref={sectionRef} id="book-consultation" className="py-20 bg-white">
