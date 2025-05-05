@@ -29,7 +29,8 @@ const BookConsultationSection = () => {
   };
 
   // Use Intersection Observer to load Calendly when the container is in view
-  const { ref: calendlyObserverRef, inView: calendlyInView } = useInView({
+  const observerRef = useRef<HTMLDivElement>(null);
+  const observerIsInView = useInView(observerRef, {
     threshold: 0.1,
     triggerOnce: true,
     onChange: (inView) => {
@@ -102,7 +103,7 @@ const BookConsultationSection = () => {
 
           {/* Right side: Calendly with lazy loading */}
           <motion.div
-            ref={calendlyObserverRef}
+            ref={observerRef}
             initial={{ opacity: 0, x: 50 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
             transition={{ duration: 0.7, delay: 0.2 }}
@@ -114,7 +115,7 @@ const BookConsultationSection = () => {
               data-url="https://calendly.com/info-deepaisolutions/30min?hide_event_type_details=1&hide_gdpr_banner=1&background_color=ffffff&text_color=1C1C1E&primary_color=FF5C58"
               style={{ minWidth: "320px", height: "630px" }}
             >
-              {!calendlyInView && (
+              {!observerIsInView && (
                 <div className="flex items-center justify-center h-full">
                   <Calendar className="animate-pulse text-accent-coral" size={48} />
                 </div>
