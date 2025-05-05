@@ -19,7 +19,7 @@ const NavbarLink = ({
   return (
     <Link 
       to={to} 
-      className={`text-primary-navy hover:text-accent-coral transition-all duration-300 py-1 px-3 rounded-full hover:bg-gray-100/70 ${isActive ? 'text-accent-coral' : ''} ${className}`}
+      className={`text-gray-300 hover:text-white transition-all duration-300 py-1 px-3 rounded-full hover:bg-white/10 ${isActive ? 'text-white font-medium' : ''} ${className}`}
       onClick={onClick}
     >
       {children}

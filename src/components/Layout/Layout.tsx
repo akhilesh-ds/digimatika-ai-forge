@@ -29,7 +29,7 @@ const Layout = ({ children }: LayoutProps) => {
           animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1 }}
           exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: shouldReduceMotion ? 0 : 0.3 }}
-          className="flex-grow pt-24" 
+          className="flex-grow pt-32" 
           tabIndex={-1}
         >
           <div className="container mx-auto max-w-7xl px-4 md:px-8">

@@ -39,7 +39,7 @@ const DesktopNavigation = ({
         </div>
       ))}
       <Link to="/book-appointment">
-        <button className="btn-accent hover:shadow-md hover:shadow-accent-coral/30 transition-all duration-300 rounded-full text-sm py-2">
+        <button className="bg-accent-coral hover:bg-accent-coral/90 text-white px-4 py-2 rounded-full text-sm hover:shadow-md hover:shadow-accent-coral/30 transition-all duration-300">
           Book a Consultation
         </button>
       </Link>
